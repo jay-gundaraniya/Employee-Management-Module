@@ -2,7 +2,6 @@ import axios from 'axios';
 
 const API_URL = 'http://localhost:5000/api';
 
-// Create axios instance with default config
 const api = axios.create({
   baseURL: API_URL,
   headers: {
@@ -10,7 +9,6 @@ const api = axios.create({
   },
 });
 
-// Add token to requests if it exists
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('token');
   if (token) {
@@ -19,21 +17,28 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-// Auth API calls
 export const authAPI = {
   register: (userData) => api.post('/users/register', userData),
   login: (credentials) => api.post('/users/login', credentials),
 };
 
-// Employee API calls
 export const employeeAPI = {
   getAll: () => api.get('/employees'),
   getById: (id) => api.get(`/employees/${id}`),
   create: (employeeData) => {
     const formData = new FormData();
-    Object.keys(employeeData).forEach(key => {
-      formData.append(key, employeeData[key]);
-    });
+    
+    formData.append('name', employeeData.name);
+    formData.append('email', employeeData.email);
+    formData.append('phone', employeeData.phone);
+    formData.append('department', employeeData.department);
+    formData.append('position', employeeData.position);
+    formData.append('salary', Number(employeeData.salary));
+    
+    if (employeeData.profilePic) {
+      formData.append('profilePicture', employeeData.profilePic);
+    }
+
     return api.post('/employees', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
@@ -42,9 +47,18 @@ export const employeeAPI = {
   },
   update: (id, employeeData) => {
     const formData = new FormData();
-    Object.keys(employeeData).forEach(key => {
-      formData.append(key, employeeData[key]);
-    });
+    
+    formData.append('name', employeeData.name);
+    formData.append('email', employeeData.email);
+    formData.append('phone', employeeData.phone);
+    formData.append('department', employeeData.department);
+    formData.append('position', employeeData.position);
+    formData.append('salary', Number(employeeData.salary));
+    
+    if (employeeData.profilePic) {
+      formData.append('profilePicture', employeeData.profilePic);
+    }
+
     return api.put(`/employees/${id}`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',

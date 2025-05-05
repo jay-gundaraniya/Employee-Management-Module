@@ -46,13 +46,27 @@ const CreateEmployee = () => {
     setError('');
     setLoading(true);
 
+    if (!formData.name || !formData.email || !formData.phone || 
+        !formData.department || !formData.position || !formData.salary) {
+      setError('All fields are required');
+      setLoading(false);
+      return;
+    }
+
+    if (!/^\d{10}$/.test(formData.phone)) {
+      setError('Phone number must be 10 digits');
+      setLoading(false);
+      return;
+    }
+
+    if (isNaN(formData.salary) || Number(formData.salary) <= 0) {
+      setError('Salary must be a positive number');
+      setLoading(false);
+      return;
+    }
+
     try {
-      // Convert salary to number
-      const employeeData = {
-        ...formData,
-        salary: Number(formData.salary)
-      };
-      await employeeAPI.create(employeeData);
+      await employeeAPI.create(formData);
       navigate('/employees');
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to create employee. Please try again.');

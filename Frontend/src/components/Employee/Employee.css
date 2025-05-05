@@ -17,7 +17,6 @@
 
 
 .add-button {
-  background-color: #4CAF50;
   color: white;
   padding: 0.5rem 1rem;
   border: none;
@@ -92,17 +91,17 @@
 }
 
 .view-button {
-  background-color: #2196F3;
+  background-color: #000000;
   color: white;
 }
 
 .edit-button {
-  background-color: #FFC107;
-  color: black;
+  background-color: #000000;
+  color: white;
 }
 
 .delete-button {
-  background-color: #f44336;
+  background-color: #000000;
   color: white;
 }
 
@@ -185,12 +184,13 @@
 }
 
 .cancel-button {
-  background-color: #f44336;
+  background-color: #000000;
   color: white;
+  margin-right: 10px;
 }
 
 .submit-button {
-  background-color: #4CAF50;
+  background-color: #000000;
   color: white;
 }
 

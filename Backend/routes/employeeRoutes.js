@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const upload = require('../middleware/upload');
 const {
   getEmployees,
   getEmployeeById,
@@ -11,14 +12,14 @@ const {
 
 router.route('/')
   .get(getEmployees)
-  .post(createEmployee);
+  .post(upload.single('profilePicture'), createEmployee);
 
 router.route('/search')
   .get(searchEmployees);
 
 router.route('/:id')
   .get(getEmployeeById)
-  .put(updateEmployee)
+  .put(upload.single('profilePicture'), updateEmployee)
   .delete(deleteEmployee);
 
 module.exports = router; 
